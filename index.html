@@ -1181,17 +1181,22 @@
             
             // Reveal on scroll
             revealOnScroll: () => {
-                const reveals = Utils.$$('.reveal, .reveal-left, .reveal-right');
-                reveals.forEach(el => {
-                    const windowHeight = window.innerHeight;
-                    const elementTop = el.getBoundingClientRect().top;
-                    const elementVisible = 150;
-                    
-                    if (elementTop < windowHeight - elementVisible) {
-                        el.classList.add('active');
-                    }
-                });
-            },
+                            const reveals = Utils.$$('.reveal, .reveal-left, .reveal-right');
+                            reveals.forEach(el => {
+                                // Skip if already revealed
+                                if (el.classList.contains('active')) return;
+                                
+                                const windowHeight = window.innerHeight;
+                                const elementTop = el.getBoundingClientRect().top;
+                                const elementVisible = 150;
+                                
+                                if (elementTop < windowHeight - elementVisible) {
+                                    el.classList.add('active');
+                                    // Mark as revealed to prevent re-animation
+                                    el.setAttribute('data-revealed', 'true');
+                                }
+                            });
+                        },
             
             // Smooth parallax
             parallax: () => {
