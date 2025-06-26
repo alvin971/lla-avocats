@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLA Avocats - Cabinet d'avocats d'affaires à Paris</title>
+    <title>Maître Paul-Émile Boutmy - Avocat au Barreau de Paris</title>
     
     <style>
         /* Variables CSS avec animations */
@@ -273,9 +273,10 @@
 
         .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
 
         @media (max-width: 768px) {
-            .grid-2, .grid-3 {
+            .grid-2, .grid-3, .grid-4 {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
@@ -839,45 +840,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Team cards avec tilt effect */
-        .team-card {
-            transition: all var(--transition);
-            transform-style: preserve-3d;
-            transform: perspective(1000px);
-            padding: 1.5rem;
-        }
-
-        .team-card:hover {
-            transform: perspective(1000px) rotateY(-10deg) rotateX(10deg);
-        }
-
-        .team-photo {
-            text-align: center;
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            filter: grayscale(0.5);
-            transition: all var(--transition);
-        }
-
-        .team-card:hover .team-photo {
-            filter: grayscale(0);
-            transform: scale(1.1);
-        }
-
-        @media (max-width: 768px) {
-            .team-card:hover {
-                transform: none;
-            }
-            
-            .team-photo {
-                font-size: 3rem;
-            }
-            
-            .team-card:hover .team-photo {
-                transform: none;
-            }
-        }
-
         /* Footer avec gradient */
         .footer {
             background: linear-gradient(135deg, var(--gray-5) 0%, #0f172a 100%);
@@ -1005,6 +967,33 @@
             transform: translateX(0);
         }
 
+        /* Stats section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray-3);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Utilities */
         .text-center { text-align: center; }
         .mb-4 { margin-bottom: 1rem; }
@@ -1028,6 +1017,10 @@
             .btn {
                 padding: 0.625rem 1.25rem;
                 font-size: 0.9rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
             }
         }
 
@@ -1076,68 +1069,79 @@
         };
 
         const STRINGS = {
-            appName: 'LLA Avocats',
+            appName: 'Maître Paul-Émile Boutmy',
             nav: {
                 home: 'Accueil',
                 expertises: 'Expertises',
-                team: 'Notre équipe',
+                parcours: 'Parcours',
                 appointment: 'Rendez-vous',
                 contact: 'Contact'
             },
             hero: {
-                title: 'Cabinet d\'avocats d\'affaires nouvelle génération',
-                subtitle: 'Nous accompagnons dirigeants et entrepreneurs avec agilité, transparence et expertise pointue.',
+                title: 'Maître Paul-Émile Boutmy',
+                subtitle: 'Avocat au Barreau de Paris - Expertise en droit des affaires, droit bancaire et contentieux',
                 ctaPrimary: 'Prendre rendez-vous',
-                ctaSecondary: 'Découvrir nos expertises'
+                ctaSecondary: 'Découvrir mes expertises'
             },
             expertises: {
                 business: {
                     title: 'Droit des affaires',
-                    desc: 'Accompagnement juridique complet pour TPE/PME : création, contrats, litiges commerciaux.',
-                    detail: 'Nous vous accompagnons dans toutes les étapes de la vie de votre entreprise : création, restructuration, cession, contentieux.'
+                    desc: 'Accompagnement juridique complet : création de société, contrats commerciaux, cession de fonds de commerce.',
+                    detail: 'Fort de mon expérience, je vous accompagne dans toutes les étapes de la vie de votre entreprise : création, restructuration, transmission et contentieux commerciaux.'
                 },
-                public: {
-                    title: 'Droit public',
-                    desc: 'Contentieux administratifs, marchés publics, urbanisme et relations avec l\'administration.',
-                    detail: 'Notre expertise couvre tous les aspects du droit administratif et des marchés publics, avec une approche pragmatique.'
+                banking: {
+                    title: 'Droit bancaire & consommation',
+                    desc: 'Défense en contentieux bancaires, crédits immobiliers, taux effectifs globaux et pratiques commerciales.',
+                    detail: 'Spécialisé dans la défense des consommateurs et des PME, j\'ai géré plus de 370 contentieux entre 2022 et 2024 contre des établissements bancaires et sociétés de recouvrement.'
                 },
-                tax: {
-                    title: 'Droit fiscal',
-                    desc: 'Optimisation fiscale, contrôles URSSAF, contentieux fiscal et conseils patrimoniaux.',
-                    detail: 'Conseil en optimisation fiscale et assistance lors de contrôles fiscaux, nous sécurisons vos opérations.'
+                realestate: {
+                    title: 'Droit immobilier',
+                    desc: 'Saisies immobilières, contentieux de copropriété, baux commerciaux et litiges locatifs.',
+                    detail: 'Expertise reconnue en procédures de saisie immobilière et contentieux immobiliers complexes, avec plusieurs décisions jurisprudentielles majeures à mon actif.'
                 },
-                sports: {
-                    title: 'Droit du sport',
-                    desc: 'Contrats sportifs, transferts, droits à l\'image et litiges disciplinaires.',
-                    detail: 'Rédaction et négociation de contrats sportifs, transferts et droits à l\'image pour clubs et athlètes.'
+                execution: {
+                    title: 'Procédures civiles d\'exécution',
+                    desc: 'Recouvrement de créances, procédures collectives et mesures d\'exécution forcée.',
+                    detail: 'Maîtrise approfondie des procédures d\'exécution et du recouvrement, acquise notamment lors de 8 années de collaboration dans des cabinets spécialisés.'
                 }
             }
         };
 
-        // Data mockées
-        const LAWYERS_DATA = [
-            {
-                id: '1',
-                name: 'Laurent Lefebvre',
-                specialties: ['Droit des affaires', 'Droit fiscal'],
-                bio: '20 ans d\'expérience en conseil aux entreprises. Spécialiste des opérations de M&A.',
-                rate: 450
+        // Data de l'avocat
+        const LAWYER_DATA = {
+            name: 'Maître Paul-Émile Boutmy',
+            barDate: '24 avril 2013',
+            experience: '12 ans d\'expérience',
+            education: [
+                'Master 2 en Obligations Civiles et Commerciales - Université Paris V René Descartes',
+                'Master 1 de Droit Privé Général - Université Paris II Panthéon-Assas'
+            ],
+            international: [
+                'Cabinet Gide Loyrette Nouel - Pékin',
+                'Cabinet Ngo Cohen - Hanoï',
+                'Cabinet de Thierry Levy - Paris'
+            ],
+            achievements: [
+                'Plus de 370 contentieux gérés entre 2022 et 2024',
+                'Plusieurs décisions jurisprudentielles majeures en droit de la consommation',
+                'Expertise reconnue en clauses abusives et pratiques commerciales déloyales',
+                'Intervention dans le cadre de l\'aide juridictionnelle'
+            ],
+            offices: {
+                paris: {
+                    address: '4 rue Saint Nicolas',
+                    city: '75012 Paris',
+                    phone: '01 44 51 09 09',
+                    mobile: '06 63 68 71 99'
+                },
+                chartres: {
+                    city: 'Barreau de Chartres',
+                    label: 'Cabinet secondaire'
+                }
             },
-            {
-                id: '2',
-                name: 'Lucie Lambert',
-                specialties: ['Droit public', 'Droit administratif'],
-                bio: 'Experte en contentieux administratif et marchés publics.',
-                rate: 400
-            },
-            {
-                id: '3',
-                name: 'Alexandre Arnaud',
-                specialties: ['Droit du sport', 'Droit des affaires'],
-                bio: 'Spécialiste du droit du sport et des contrats d\'image.',
-                rate: 420
-            }
-        ];
+            email: 'paulemileboutmy@gmail.com',
+            website: 'www.avocat-boutmy.com'
+        };
 
         // Utilitaires
         const Utils = {
@@ -1149,10 +1153,6 @@
             formatDate: date => new Date(date).toLocaleDateString('fr-FR', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             }),
-            
-            formatPrice: price => new Intl.NumberFormat('fr-FR', {
-                style: 'currency', currency: 'EUR'
-            }).format(price),
             
             validateEmail: email => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email),
             validatePhone: phone => /^[0-9+\-\s()]+$/.test(phone) && phone.length >= 10,
@@ -1181,22 +1181,22 @@
             
             // Reveal on scroll
             revealOnScroll: () => {
-                            const reveals = Utils.$$('.reveal, .reveal-left, .reveal-right');
-                            reveals.forEach(el => {
-                                // Skip if already revealed
-                                if (el.classList.contains('active')) return;
-                                
-                                const windowHeight = window.innerHeight;
-                                const elementTop = el.getBoundingClientRect().top;
-                                const elementVisible = 150;
-                                
-                                if (elementTop < windowHeight - elementVisible) {
-                                    el.classList.add('active');
-                                    // Mark as revealed to prevent re-animation
-                                    el.setAttribute('data-revealed', 'true');
-                                }
-                            });
-                        },
+                const reveals = Utils.$$('.reveal, .reveal-left, .reveal-right');
+                reveals.forEach(el => {
+                    // Skip if already revealed
+                    if (el.classList.contains('active')) return;
+                    
+                    const windowHeight = window.innerHeight;
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add('active');
+                        // Mark as revealed to prevent re-animation
+                        el.setAttribute('data-revealed', 'true');
+                    }
+                });
+            },
             
             // Smooth parallax
             parallax: () => {
@@ -1217,8 +1217,7 @@
             constructor() {
                 this.state = {
                     page: 'home',
-                    lawyers: LAWYERS_DATA,
-                    appointment: { lawyer: null, date: null, time: null },
+                    appointment: { date: null, time: null },
                     loading: false
                 };
                 this.listeners = new Set();
@@ -1244,7 +1243,7 @@
 
             resetAppointment() {
                 this.setState({
-                    appointment: { lawyer: null, date: null, time: null }
+                    appointment: { date: null, time: null }
                 });
             }
 
@@ -1357,17 +1356,41 @@
                             </div>
                         </section>
 
+                        <section class="py-16" style="background: var(--gray-1);">
+                            <div class="container">
+                                <h2 class="text-center mb-8 reveal">Une expertise reconnue</h2>
+                                <div class="stats-grid reveal">
+                                    <div class="stat-card">
+                                        <div class="stat-number">12+</div>
+                                        <div class="stat-label">Années d'expérience</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">370+</div>
+                                        <div class="stat-label">Contentieux gérés (2022-2024)</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">2</div>
+                                        <div class="stat-label">Cabinets (Paris & Chartres)</div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-number">4</div>
+                                        <div class="stat-label">Domaines d'expertise</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         <section class="py-16">
                             <div class="container">
-                                <h2 class="text-center mb-8 reveal">Nos domaines d'expertise</h2>
-                                <div class="grid grid-3">
+                                <h2 class="text-center mb-8 reveal">Mes domaines d'expertise</h2>
+                                <div class="grid grid-4">
                                     ${Object.entries(STRINGS.expertises).map(([key, exp], index) => `
                                         <div class="card expertise-card reveal" style="animation-delay: ${index * 0.1}s;">
                                             <div class="expertise-icon">${{
                                                 business: '💼',
-                                                public: '🏛️',
-                                                tax: '💰',
-                                                sports: '⚽'
+                                                banking: '🏦',
+                                                realestate: '🏢',
+                                                execution: '⚖️'
                                             }[key]}</div>
                                             <h3>${exp.title}</h3>
                                             <p style="color: var(--gray-3);">${exp.desc}</p>
@@ -1381,10 +1404,10 @@
                             <div class="container text-center">
                                 <h2 class="mb-4 reveal">Besoin d'un conseil juridique ?</h2>
                                 <p class="mb-8 reveal" style="font-size: 1.125rem; color: var(--gray-3);">
-                                    Nos avocats sont disponibles pour vous accompagner
+                                    Je suis disponible pour vous accompagner dans vos démarches juridiques
                                 </p>
                                 <button class="btn btn-accent reveal" data-action="contact">
-                                    Nous contacter maintenant
+                                    Me contacter maintenant
                                 </button>
                             </div>
                         </section>
@@ -1411,37 +1434,73 @@
             }
         }
 
-        // TeamPage
-        class TeamPage extends Component {
+        // ParcoursPage
+        class ParcoursPage extends Component {
             render() {
-                const { lawyers } = store.getState();
                 const isMobile = Utils.isMobile();
                 
                 return `
                     <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
-                                <h1 class="text-center mb-8 reveal">Notre équipe</h1>
-                                <div class="grid grid-3">
-                                    ${lawyers.map((lawyer, index) => `
-                                        <div class="card team-card ${!isMobile ? 'card-3d' : ''} reveal"
-                                             style="animation-delay: ${index * 0.15}s;">
-                                            <div class="team-photo">👤</div>
-                                            <h3>${lawyer.name}</h3>
-                                            <p style="color: var(--accent); font-size: 0.9rem;">
-                                                ${lawyer.specialties.join(' • ')}
-                                            </p>
-                                            <p style="color: var(--gray-3); margin: 1rem 0;">${lawyer.bio}</p>
-                                            <p style="font-weight: 500;">
-                                                Taux horaire : ${Utils.formatPrice(lawyer.rate)}
-                                            </p>
-                                        </div>
-                                    `).join('')}
+                                <h1 class="text-center mb-8 reveal">Mon parcours</h1>
+                                
+                                <div class="grid grid-2" style="max-width: 900px; margin: 0 auto;">
+                                    <div class="card ${!isMobile ? 'card-3d' : ''} reveal" style="padding: 2rem;">
+                                        <h3 class="mb-4">Formation universitaire</h3>
+                                        <ul style="color: var(--gray-3); line-height: 2;">
+                                            ${LAWYER_DATA.education.map(edu => `
+                                                <li style="margin-bottom: 0.5rem;">${edu}</li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="card ${!isMobile ? 'card-3d' : ''} reveal" style="padding: 2rem; animation-delay: 0.1s;">
+                                        <h3 class="mb-4">Expérience internationale</h3>
+                                        <ul style="color: var(--gray-3); line-height: 2;">
+                                            ${LAWYER_DATA.international.map(exp => `
+                                                <li style="margin-bottom: 0.5rem;">${exp}</li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card reveal mt-8" style="padding: 2rem; max-width: 900px; margin: 2rem auto;">
+                                    <h3 class="mb-4">Expertise et réalisations</h3>
+                                    <p style="color: var(--gray-3); margin-bottom: 1rem;">
+                                        Avocat au Barreau de Paris depuis le ${LAWYER_DATA.barDate}, j'ai développé une expertise 
+                                        approfondie en procédures civiles d'exécution, en droit bancaire et en droit de la consommation 
+                                        au cours de 8 années de collaboration dans des cabinets spécialisés dans la défense d'organismes 
+                                        bancaires.
+                                    </p>
+                                    <p style="color: var(--gray-3); margin-bottom: 1rem;">
+                                        Entre 2022 et 2024, j'ai fondé mon propre cabinet axé sur la défense des consommateurs et des PME, 
+                                        gérant plus de 370 contentieux contre des sociétés spécialisées dans le rachat de prêts non performants 
+                                        et des établissements bancaires majeurs.
+                                    </p>
+                                    <h4 class="mb-4 mt-4">Principales réalisations :</h4>
+                                    <ul style="color: var(--gray-3); line-height: 2;">
+                                        ${LAWYER_DATA.achievements.map(achievement => `
+                                            <li style="margin-bottom: 0.5rem;">• ${achievement}</li>
+                                        `).join('')}
+                                    </ul>
+                                </div>
+                                
+                                <div class="text-center mt-8">
+                                    <button class="btn btn-primary reveal" data-action="appointment">
+                                        Prendre rendez-vous
+                                    </button>
                                 </div>
                             </div>
                         </section>
                     </div>
                 `;
+            }
+
+            attachEvents(container) {
+                Utils.$('[data-action="appointment"]', container)?.addEventListener('click', () => {
+                    store.navigate('appointment');
+                });
             }
 
             animate() {
@@ -1452,7 +1511,7 @@
         // AppointmentPage
         class AppointmentPage extends Component {
             render() {
-                const { lawyers, appointment } = store.getState();
+                const { appointment } = store.getState();
                 const isMobile = Utils.isMobile();
                 
                 return `
@@ -1461,25 +1520,7 @@
                             <div class="container">
                                 <h1 class="text-center mb-8 reveal">Prendre rendez-vous</h1>
                                 
-                                ${!appointment.lawyer ? `
-                                    <h2 class="text-center mb-4 reveal">Choisissez votre avocat</h2>
-                                    <div class="grid grid-3">
-                                        ${lawyers.map((lawyer, index) => `
-                                            <div class="card ${!isMobile ? 'card-3d' : ''} reveal" 
-                                                 style="animation-delay: ${index * 0.1}s; padding: 1.5rem; cursor: pointer;" 
-                                                 data-lawyer="${lawyer.id}">
-                                                <div style="text-align: center; font-size: 3rem;">👤</div>
-                                                <h3 style="font-size: 1.25rem;">${lawyer.name}</h3>
-                                                <p style="color: var(--accent); font-size: 0.85rem;">
-                                                    ${lawyer.specialties.join(' • ')}
-                                                </p>
-                                                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
-                                                    ${Utils.formatPrice(lawyer.rate)}/heure
-                                                </p>
-                                            </div>
-                                        `).join('')}
-                                    </div>
-                                ` : !appointment.date ? `
+                                ${!appointment.date ? `
                                     <h2 class="text-center mb-4 reveal">Sélectionnez une date</h2>
                                     <div class="calendar reveal" style="max-width: 400px; margin: 0 auto;">
                                         <div class="calendar-header">
@@ -1490,9 +1531,6 @@
                                         <div class="calendar-grid">
                                             ${this.generateCalendar()}
                                         </div>
-                                    </div>
-                                    <div class="text-center mt-4">
-                                        <button class="btn btn-secondary" data-back="lawyer">← Retour</button>
                                     </div>
                                 ` : !appointment.time ? `
                                     <h2 class="text-center mb-4 reveal">Choisissez un horaire</h2>
@@ -1513,10 +1551,10 @@
                                     <div class="card reveal" style="max-width: 500px; margin: 0 auto; padding: 2rem;">
                                         <h2 class="mb-4">Confirmer votre rendez-vous</h2>
                                         <div style="background: var(--gray-1); padding: 1rem; border-radius: var(--radius); margin-bottom: 2rem;">
-                                            <p><strong>Avocat :</strong> ${lawyers.find(l => l.id === appointment.lawyer).name}</p>
+                                            <p><strong>Avocat :</strong> ${LAWYER_DATA.name}</p>
                                             <p><strong>Date :</strong> ${Utils.formatDate(appointment.date)}</p>
                                             <p><strong>Heure :</strong> ${appointment.time}</p>
-                                            <p><strong>Lieu :</strong> Cabinet LLA Avocats, Paris</p>
+                                            <p><strong>Lieu :</strong> ${LAWYER_DATA.offices.paris.address}, ${LAWYER_DATA.offices.paris.city}</p>
                                         </div>
                                         
                                         <form id="confirmForm">
@@ -1571,13 +1609,6 @@
             }
 
             attachEvents(container) {
-                // Sélection avocat
-                Utils.$$('[data-lawyer]', container).forEach(el => {
-                    el.addEventListener('click', e => {
-                        store.setAppointment('lawyer', e.currentTarget.dataset.lawyer);
-                    });
-                });
-
                 // Sélection date
                 Utils.$$('[data-date]', container).forEach(el => {
                     el.addEventListener('click', e => {
@@ -1596,8 +1627,7 @@
                 Utils.$$('[data-back]', container).forEach(el => {
                     el.addEventListener('click', e => {
                         const step = e.target.dataset.back;
-                        if (step === 'lawyer') store.setAppointment('lawyer', null);
-                        else if (step === 'date') store.setAppointment('date', null);
+                        if (step === 'date') store.setAppointment('date', null);
                         else if (step === 'time') store.setAppointment('time', null);
                     });
                 });
@@ -1644,7 +1674,7 @@
                     <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
-                                <h1 class="text-center mb-8 reveal">Contactez-nous</h1>
+                                <h1 class="text-center mb-8 reveal">Me contacter</h1>
                                 <div class="grid grid-2" style="max-width: 800px; margin: 0 auto;">
                                     <div class="reveal-left">
                                         <form id="contactForm" class="card" style="padding: 2rem;">
@@ -1663,7 +1693,7 @@
                                             <div class="form-group">
                                                 <label class="form-label">Message *</label>
                                                 <textarea class="form-textarea" name="message" rows="4" required 
-                                                          placeholder="Comment pouvons-nous vous aider ?"></textarea>
+                                                          placeholder="Comment puis-je vous aider ?"></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-primary" style="width: 100%;">
                                                 Envoyer le message
@@ -1672,19 +1702,19 @@
                                     </div>
                                     <div class="reveal-right">
                                         <div class="card" style="padding: 2rem; margin-bottom: 1rem;">
-                                            <h3 class="mb-4">Coordonnées</h3>
+                                            <h3 class="mb-4">Cabinet principal - Paris</h3>
                                             <p><strong>Adresse :</strong><br>
-                                            123 Avenue des Champs-Élysées<br>
-                                            75008 Paris</p>
+                                            ${LAWYER_DATA.offices.paris.address}<br>
+                                            ${LAWYER_DATA.offices.paris.city}</p>
                                             <p class="mt-4"><strong>Téléphone :</strong><br>
-                                            +33 1 XX XX XX XX</p>
+                                            ${LAWYER_DATA.offices.paris.phone}<br>
+                                            ${LAWYER_DATA.offices.paris.mobile}</p>
                                             <p class="mt-4"><strong>Email :</strong><br>
-                                            contact@lla-avocats.fr</p>
+                                            ${LAWYER_DATA.email}</p>
                                         </div>
                                         <div class="card" style="padding: 2rem;">
-                                            <h3 class="mb-4">Horaires</h3>
-                                            <p><strong>Lundi - Vendredi :</strong><br>
-                                            9h00 - 18h00</p>
+                                            <h3 class="mb-4">Cabinet secondaire</h3>
+                                            <p><strong>${LAWYER_DATA.offices.chartres.city}</strong></p>
                                             <p class="mt-4">Consultations sur rendez-vous uniquement</p>
                                         </div>
                                     </div>
@@ -1713,7 +1743,7 @@
                         
                         await Utils.delay(1500);
                         
-                        Utils.showToast('Message envoyé avec succès ! Nous vous répondrons sous 24h.');
+                        Utils.showToast('Message envoyé avec succès ! Je vous répondrai sous 24h.');
                         form.reset();
                         submitBtn.disabled = false;
                         submitBtn.textContent = 'Envoyer le message';
@@ -1735,9 +1765,9 @@
                     <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
-                                <h1 class="text-center mb-8 reveal">Nos expertises</h1>
+                                <h1 class="text-center mb-8 reveal">Mes expertises</h1>
                                 <p class="text-center mb-8 reveal" style="font-size: 1.125rem; color: var(--gray-3);">
-                                    Une expertise pointue dans les domaines clés du droit des affaires
+                                    Une expertise pointue acquise au cours de ${LAWYER_DATA.experience}
                                 </p>
                                 <div class="${isMobile ? '' : 'grid grid-2'}">
                                     ${Object.entries(STRINGS.expertises).map(([key, exp], index) => {
@@ -1749,9 +1779,9 @@
                                                         <div class="expertise-icon">
                                                             ${{
                                                                 business: '💼',
-                                                                public: '🏛️',
-                                                                tax: '💰',
-                                                                sports: '⚽'
+                                                                banking: '🏦',
+                                                                realestate: '🏢',
+                                                                execution: '⚖️'
                                                             }[key]}
                                                         </div>
                                                         <h3 style="margin: 0;">${exp.title}</h3>
@@ -1771,9 +1801,9 @@
                                                         <div class="expertise-icon" style="flex-shrink: 0;">
                                                             ${{
                                                                 business: '💼',
-                                                                public: '🏛️',
-                                                                tax: '💰',
-                                                                sports: '⚽'
+                                                                banking: '🏦',
+                                                                realestate: '🏢',
+                                                                execution: '⚖️'
                                                             }[key]}
                                                         </div>
                                                         <div>
@@ -1786,6 +1816,12 @@
                                             `;
                                         }
                                     }).join('')}
+                                </div>
+                                
+                                <div class="text-center mt-8">
+                                    <button class="btn btn-accent reveal" data-action="appointment">
+                                        Discuter de votre situation
+                                    </button>
                                 </div>
                             </div>
                         </section>
@@ -1800,6 +1836,10 @@
                         const accordion = e.currentTarget.closest('.expertise-accordion');
                         accordion.classList.toggle('active');
                     });
+                });
+                
+                Utils.$('[data-action="appointment"]', container)?.addEventListener('click', () => {
+                    store.navigate('appointment');
                 });
             }
 
@@ -1816,32 +1856,34 @@
                         <div class="container">
                             <div class="footer-content" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
                                 <div>
-                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">LLA Avocats</h4>
-                                    <p>Cabinet d'avocats d'affaires innovant basé à Paris, spécialisé dans l'accompagnement des entrepreneurs.</p>
+                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Maître Paul-Émile Boutmy</h4>
+                                    <p>Avocat au Barreau de Paris depuis ${LAWYER_DATA.barDate}. Expertise reconnue en droit des affaires, droit bancaire et contentieux.</p>
                                 </div>
                                 <div>
-                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Contact</h4>
-                                    <p>123 Avenue des Champs-Élysées<br>
-                                    75008 Paris<br>
-                                    Tél: +33 1 XX XX XX XX<br>
-                                    contact@lla-avocats.fr</p>
+                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Cabinet principal</h4>
+                                    <p>${LAWYER_DATA.offices.paris.address}<br>
+                                    ${LAWYER_DATA.offices.paris.city}<br>
+                                    Tél: ${LAWYER_DATA.offices.paris.phone}<br>
+                                    Mobile: ${LAWYER_DATA.offices.paris.mobile}<br>
+                                    ${LAWYER_DATA.email}</p>
                                 </div>
                                 <div>
-                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Horaires</h4>
-                                    <p>Lundi - Vendredi<br>
-                                    9h00 - 18h00<br>
+                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Cabinet secondaire</h4>
+                                    <p>${LAWYER_DATA.offices.chartres.city}<br>
                                     <br>
-                                    Consultations sur RDV</p>
+                                    Consultations sur rendez-vous</p>
                                 </div>
                                 <div>
-                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Suivez-nous</h4>
-                                    <p>LinkedIn<br>
-                                    Twitter<br>
-                                    Facebook</p>
+                                    <h4 style="color: var(--accent); margin-bottom: 1rem;">Expertises</h4>
+                                    <p>Droit des affaires<br>
+                                    Droit bancaire & consommation<br>
+                                    Droit immobilier<br>
+                                    Procédures civiles d'exécution<br>
+                                    Aide juridictionnelle</p>
                                 </div>
                             </div>
                             <div class="text-center mt-8" style="opacity: 0.6; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                                <p>© 2024 LLA Avocats. Tous droits réservés.</p>
+                                <p>© 2024 Maître Paul-Émile Boutmy. Tous droits réservés. | ${LAWYER_DATA.website}</p>
                             </div>
                         </div>
                     </footer>
@@ -1858,7 +1900,7 @@
                     pages: {
                         home: new HomePage(),
                         expertises: new ExpertisesPage(),
-                        team: new TeamPage(),
+                        parcours: new ParcoursPage(),
                         appointment: new AppointmentPage(),
                         contact: new ContactPage()
                     }
