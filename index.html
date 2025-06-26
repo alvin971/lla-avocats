@@ -1261,11 +1261,14 @@
 
         // Composant de base
         class Component {
-            mount(container) {
+            async mount(container) {
+                container.innerHTML = '<div class="text-center py-16"><div class="loading"></div></div>';
+                await this.beforeRender();
                 container.innerHTML = this.render();
                 this.attachEvents(container);
                 this.animate(container);
             }
+            async beforeRender() {}
             render() { return ''; }
             attachEvents() {}
             animate() {}
@@ -1416,8 +1419,11 @@
 
         // TeamPage
         class TeamPage extends Component {
-            async render() {
+            async beforeRender() {
                 await store.loadLawyers();
+            }
+
+            render() {
                 const { lawyers } = store.getState();
                 
                 return `
@@ -1454,8 +1460,11 @@
 
         // AppointmentPage
         class AppointmentPage extends Component {
-            async render() {
+            async beforeRender() {
                 await store.loadLawyers();
+            }
+
+            render() {
                 const { lawyers, appointment } = store.getState();
                 
                 return `
@@ -1888,6 +1897,9 @@
                     Utils.$('#pageLoader').classList.add('hide');
                 }, 800);
 
+                // Load initial data
+                store.loadLawyers();
+
                 // Subscribe to state changes
                 store.subscribe(() => this.render());
                 this.render();
@@ -1912,7 +1924,7 @@
                 Utils.revealOnScroll();
             }
 
-            render() {
+            async render() {
                 const { page } = store.getState();
                 
                 this.root.innerHTML = `
@@ -1921,11 +1933,11 @@
                     <div id="footer"></div>
                 `;
                 
-                this.components.header.mount(Utils.$('#header'));
-                this.components.footer.mount(Utils.$('#footer'));
+                await this.components.header.mount(Utils.$('#header'));
+                await this.components.footer.mount(Utils.$('#footer'));
                 
                 const currentPage = this.components.pages[page] || this.components.pages.home;
-                currentPage.mount(Utils.$('#main'));
+                await currentPage.mount(Utils.$('#main'));
                 
                 if (window.history.state?.page !== page) {
                     window.history.pushState({ page }, '', `#${page}`);
