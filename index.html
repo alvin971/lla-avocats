@@ -1397,16 +1397,16 @@
     <!-- Header -->
     <header id="header">
         <nav>
-            <div class="logo" onclick="showPage('home')">
+            <div class="logo" onclick="showPage('home', event)">
                 🛺 TukTuk Paris Connect
             </div>
             <ul class="nav-links">
-                <li><a href="#" onclick="showPage('home')">Accueil</a></li>
-                <li><a href="#" onclick="showPage('circuits')">Nos Circuits</a></li>
-                <li><a href="#" onclick="showPage('tarifs')">Tarifs</a></li>
-                <li><a href="#" onclick="showPage('conducteurs')">Conducteurs</a></li>
-                <li><a href="#" onclick="showPage('about')">À propos</a></li>
-                <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('home', event)">Accueil</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('circuits', event)">Nos Circuits</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('tarifs', event)">Tarifs</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('conducteurs', event)">Conducteurs</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('about', event)">À propos</a></li>
+                <li><a href="javascript:void(0)" onclick="showPage('contact', event)">Contact</a></li>
             </ul>
             <div class="nav-actions">
                 <select class="language-selector">
@@ -1415,8 +1415,8 @@
                     <option value="es">🇪🇸 ES</option>
                     <option value="cn">🇨🇳 中文</option>
                 </select>
-                <button class="btn btn-outline" onclick="showPage('login')">Connexion</button>
-                <button class="btn btn-primary" onclick="openBooking()">
+                <button class="btn btn-outline" onclick="showPage('login', event)">Connexion</button>
+                <button class="btn btn-primary" onclick="openBooking(event)">
                     <span>Réserver</span>
                     <span>→</span>
                 </button>
@@ -1438,10 +1438,10 @@
                     <h1>Explorez Paris en <span>TukTuk Électrique</span></h1>
                     <p>Réservez votre TukTuk en 3 clics et découvrez la capitale comme jamais auparavant</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="openBooking()">
+                        <button class="btn btn-primary" onclick="openBooking(event)">
                             Réserver maintenant
                         </button>
-                        <button class="btn btn-outline" onclick="showPage('circuits')">
+                        <button class="btn btn-outline" onclick="showPage('circuits', event)">
                             Découvrir nos circuits
                         </button>
                     </div>
@@ -1461,9 +1461,9 @@
 
         <div class="quick-booking">
             <div class="booking-tabs">
-                <button class="booking-tab active" onclick="switchTab('circuit')">Circuit touristique</button>
-                <button class="booking-tab" onclick="switchTab('custom')">Trajet personnalisé</button>
-                <button class="booking-tab" onclick="switchTab('event')">Événement spécial</button>
+                <button class="booking-tab active" onclick="switchTab('circuit', event)">Circuit touristique</button>
+                <button class="booking-tab" onclick="switchTab('custom', event)">Trajet personnalisé</button>
+                <button class="booking-tab" onclick="switchTab('event', event)">Événement spécial</button>
             </div>
 
             <div class="booking-content active" id="circuit-booking">
@@ -1511,7 +1511,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking()">
+                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking(event)">
                     Voir les disponibilités →
                 </button>
             </div>
@@ -1539,7 +1539,7 @@
                         <input type="time">
                     </div>
                 </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking()">
+                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking(event)">
                     Calculer le tarif →
                 </button>
             </div>
@@ -1583,7 +1583,7 @@
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking()">
+                <button class="btn btn-primary" style="width: 100%;" onclick="openBooking(event)">
                     Demander un devis →
                 </button>
             </div>
@@ -1641,7 +1641,7 @@
                 <button class="filter-btn">Famille</button>
             </div>
             <div class="circuits-grid">
-                <div class="circuit-card" onclick="selectCircuit('Tour Eiffel & Trocadéro', 180)">
+                <div class="circuit-card" onclick="selectCircuit('Tour Eiffel & Trocadéro', 180, event)">
                     <div class="circuit-image">
                         <div class="circuit-badge">Best-seller</div>
                     </div>
@@ -1661,7 +1661,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="circuit-card" onclick="selectCircuit('Montmartre Romantique', 240)">
+                <div class="circuit-card" onclick="selectCircuit('Montmartre Romantique', 240, event)">
                     <div class="circuit-image">
                         <div class="circuit-badge">Coup de cœur</div>
                     </div>
@@ -1681,7 +1681,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="circuit-card" onclick="selectCircuit('Quartier Latin', 150)">
+                <div class="circuit-card" onclick="selectCircuit('Quartier Latin', 150, event)">
                     <div class="circuit-image"></div>
                     <div class="circuit-info">
                         <h3>Quartier Latin Historique</h3>
@@ -1860,8 +1860,8 @@
                 <div>
                     <h2>Notre Mission</h2>
                     <p style="font-size: 1.1rem; line-height: 1.8; color: #666;">
-                        TukTuk Paris Connect révolutionne la façon de découvrir Paris en connectant instantanément 
-                        les visiteurs avec des conducteurs de TukTuk certifiés. Notre plateforme garantit transparence, 
+                        TukTuk Paris Connect révolutionne la façon de découvrir Paris en connectant instantanément
+                        les visiteurs avec des conducteurs de TukTuk certifiés. Notre plateforme garantit transparence,
                         sécurité et qualité pour chaque trajet.
                     </p>
                 </div>
@@ -1967,7 +1967,7 @@
     <div class="booking-process" id="bookingProcess">
         <div class="booking-container">
             <div class="booking-header">
-                <button class="booking-close" onclick="closeBooking()">×</button>
+                <button class="booking-close" onclick="closeBooking(event)">×</button>
                 <h2>Réservez votre TukTuk</h2>
                 <div class="booking-steps">
                     <div class="booking-step active" id="step1">
@@ -2017,7 +2017,7 @@
             <div class="success-animation">✓</div>
             <h2>Réservation Confirmée!</h2>
             <p style="margin: 1rem 0; color: #666;">
-                Votre TukTuk est réservé avec succès. Vous recevrez un email de confirmation 
+                Votre TukTuk est réservé avec succès. Vous recevrez un email de confirmation
                 dans quelques instants avec tous les détails de votre réservation.
             </p>
             <div style="background: var(--light); padding: 1rem; border-radius: 10px; margin: 2rem 0;">
@@ -2078,8 +2078,11 @@
             loadDrivers();
         });
 
-        // Page Navigation
-        function showPage(pageId) {
+        // Page Navigation - Updated to accept event
+        function showPage(pageId, event) {
+            if (event) {
+                event.preventDefault();
+            }
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
@@ -2087,8 +2090,13 @@
             window.scrollTo(0, 0);
         }
 
-        // Tab Switching
-        function switchTab(tabName) {
+        // Tab Switching - Updated to accept event
+        function switchTab(tabName, event) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
             document.querySelectorAll('.booking-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -2096,18 +2104,26 @@
                 content.classList.remove('active');
             });
             
-            event.target.classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             document.getElementById(tabName + '-booking').classList.add('active');
         }
 
-        // Booking Process
-        function openBooking() {
+        // Booking Process - Updated to accept event
+        function openBooking(event) {
+            if (event) {
+                event.preventDefault();
+            }
             document.getElementById('bookingProcess').classList.add('active');
             document.body.style.overflow = 'hidden';
             updateStep(1);
         }
 
-        function closeBooking() {
+        function closeBooking(event) {
+            if (event) {
+                event.preventDefault();
+            }
             document.getElementById('bookingProcess').classList.remove('active');
             document.body.style.overflow = 'auto';
             resetBooking();
@@ -2312,7 +2328,7 @@
             ];
             
             return circuits.map(circuit => `
-                <div class="circuit-card" onclick="selectCircuit('${circuit.name}', ${circuit.price})">
+                <div class="circuit-card" onclick="selectCircuit('${circuit.name}', ${circuit.price}, event)">
                     <div class="circuit-image">
                         ${circuit.badge ? `<div class="circuit-badge">${circuit.badge}</div>` : ''}
                     </div>
@@ -2457,15 +2473,22 @@
             `).join('');
         }
 
-        // Selection Functions
-        function selectCircuit(name, price) {
+        // Selection Functions - Updated to accept event
+        function selectCircuit(name, price, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
             bookingData.circuit = name;
             bookingData.basePrice = price;
             
             document.querySelectorAll('.circuit-card').forEach(card => {
                 card.style.border = '2px solid var(--light)';
             });
-            event.currentTarget.style.border = '2px solid var(--primary)';
+            
+            if (event && event.currentTarget) {
+                event.currentTarget.style.border = '2px solid var(--primary)';
+            }
             
             updateBookingInfo();
         }
@@ -2602,17 +2625,6 @@
             // Load drivers data
             console.log('Loading drivers...');
         }
-
-        // Add smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
 
         // Add animation on scroll
         const observerOptions = {
