@@ -146,19 +146,6 @@
         h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
         h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
 
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradient-shift 3s ease infinite;
-        }
-
-        @keyframes gradient-shift {
-            0%, 100% { filter: hue-rotate(0deg); }
-            50% { filter: hue-rotate(30deg); }
-        }
-
         /* Liens avec underline animé */
         a {
             color: var(--primary);
@@ -291,6 +278,14 @@
             .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
                 gap: 1rem;
+            }
+            
+            .card:hover {
+                transform: none;
+            }
+            
+            .card-3d:hover {
+                transform: none;
             }
         }
 
@@ -615,6 +610,7 @@
         .expertise-accordion {
             cursor: pointer;
             user-select: none;
+            margin-bottom: 1rem;
         }
 
         .expertise-header {
@@ -662,6 +658,10 @@
                 width: 50px;
                 height: 50px;
             }
+            
+            .expertise-card:hover .expertise-icon {
+                transform: none;
+            }
         }
 
         /* Form avec floating labels */
@@ -696,11 +696,6 @@
             border-color: var(--primary);
             box-shadow: 0 0 0 4px rgba(30,64,175,.1);
             transform: translateY(-2px);
-        }
-
-        .form-input:valid,
-        .form-textarea:valid {
-            border-color: var(--success);
         }
 
         /* Calendar avec animations */
@@ -877,6 +872,10 @@
             .team-photo {
                 font-size: 3rem;
             }
+            
+            .team-card:hover .team-photo {
+                transform: none;
+            }
         }
 
         /* Footer avec gradient */
@@ -913,17 +912,6 @@
             border-top-color: var(--primary);
             border-radius: 50%;
             animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-        }
-
-        .skeleton {
-            background: linear-gradient(90deg, var(--gray-1) 25%, var(--gray-2) 50%, var(--gray-1) 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
         }
 
         /* Toast avec slide et fade */
@@ -1051,6 +1039,14 @@
                 transition-duration: 0.01ms !important;
             }
         }
+
+        /* Fix pour l'affichage */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in { animation: fadeIn 0.6s ease-out; }
     </style>
 </head>
 <body>
@@ -1097,22 +1093,51 @@
             expertises: {
                 business: {
                     title: 'Droit des affaires',
-                    desc: 'Accompagnement juridique complet pour TPE/PME : création, contrats, litiges commerciaux.'
+                    desc: 'Accompagnement juridique complet pour TPE/PME : création, contrats, litiges commerciaux.',
+                    detail: 'Nous vous accompagnons dans toutes les étapes de la vie de votre entreprise : création, restructuration, cession, contentieux.'
                 },
                 public: {
                     title: 'Droit public',
-                    desc: 'Contentieux administratifs, marchés publics, urbanisme et relations avec l\'administration.'
+                    desc: 'Contentieux administratifs, marchés publics, urbanisme et relations avec l\'administration.',
+                    detail: 'Notre expertise couvre tous les aspects du droit administratif et des marchés publics, avec une approche pragmatique.'
                 },
                 tax: {
                     title: 'Droit fiscal',
-                    desc: 'Optimisation fiscale, contrôles URSSAF, contentieux fiscal et conseils patrimoniaux.'
+                    desc: 'Optimisation fiscale, contrôles URSSAF, contentieux fiscal et conseils patrimoniaux.',
+                    detail: 'Conseil en optimisation fiscale et assistance lors de contrôles fiscaux, nous sécurisons vos opérations.'
                 },
                 sports: {
                     title: 'Droit du sport',
-                    desc: 'Contrats sportifs, transferts, droits à l\'image et litiges disciplinaires.'
+                    desc: 'Contrats sportifs, transferts, droits à l\'image et litiges disciplinaires.',
+                    detail: 'Rédaction et négociation de contrats sportifs, transferts et droits à l\'image pour clubs et athlètes.'
                 }
             }
         };
+
+        // Data mockées
+        const LAWYERS_DATA = [
+            {
+                id: '1',
+                name: 'Laurent Lefebvre',
+                specialties: ['Droit des affaires', 'Droit fiscal'],
+                bio: '20 ans d\'expérience en conseil aux entreprises. Spécialiste des opérations de M&A.',
+                rate: 450
+            },
+            {
+                id: '2',
+                name: 'Lucie Lambert',
+                specialties: ['Droit public', 'Droit administratif'],
+                bio: 'Experte en contentieux administratif et marchés publics.',
+                rate: 400
+            },
+            {
+                id: '3',
+                name: 'Alexandre Arnaud',
+                specialties: ['Droit du sport', 'Droit des affaires'],
+                bio: 'Spécialiste du droit du sport et des contrats d\'image.',
+                rate: 420
+            }
+        ];
 
         // Utilitaires
         const Utils = {
@@ -1182,12 +1207,12 @@
             }
         };
 
-        // Store
+        // Store simple et synchrone
         class Store {
             constructor() {
                 this.state = {
                     page: 'home',
-                    lawyers: [],
+                    lawyers: LAWYERS_DATA,
                     appointment: { lawyer: null, date: null, time: null },
                     loading: false
                 };
@@ -1205,39 +1230,6 @@
             }
 
             getState() { return this.state; }
-
-            async loadLawyers() {
-                if (this.state.lawyers.length) return;
-                this.setState({ loading: true });
-                await Utils.delay(CONFIG.api.delay);
-                
-                this.setState({
-                    loading: false,
-                    lawyers: [
-                        {
-                            id: '1',
-                            name: 'Laurent Lefebvre',
-                            specialties: ['Droit des affaires', 'Droit fiscal'],
-                            bio: '20 ans d\'expérience en conseil aux entreprises. Spécialiste des opérations de M&A.',
-                            rate: 450
-                        },
-                        {
-                            id: '2',
-                            name: 'Lucie Lambert',
-                            specialties: ['Droit public', 'Droit administratif'],
-                            bio: 'Experte en contentieux administratif et marchés publics.',
-                            rate: 400
-                        },
-                        {
-                            id: '3',
-                            name: 'Alexandre Arnaud',
-                            specialties: ['Droit du sport', 'Droit des affaires'],
-                            bio: 'Spécialiste du droit du sport et des contrats d\'image.',
-                            rate: 420
-                        }
-                    ]
-                });
-            }
 
             setAppointment(key, value) {
                 this.setState({
@@ -1259,16 +1251,13 @@
 
         const store = new Store();
 
-        // Composant de base
+        // Composant de base simple
         class Component {
-            async mount(container) {
-                container.innerHTML = '<div class="text-center py-16"><div class="loading"></div></div>';
-                await this.beforeRender();
+            mount(container) {
                 container.innerHTML = this.render();
                 this.attachEvents(container);
                 this.animate(container);
             }
-            async beforeRender() {}
             render() { return ''; }
             attachEvents() {}
             animate() {}
@@ -1340,7 +1329,7 @@
                 const isMobile = Utils.isMobile();
                 
                 return `
-                    <div>
+                    <div class="fade-in">
                         <section class="hero" ${!isMobile ? 'data-parallax="0.5"' : ''}>
                             <div class="container">
                                 <div class="hero-content">
@@ -1399,15 +1388,15 @@
             }
 
             attachEvents(container) {
-                Utils.$('[data-action="appointment"]', container).addEventListener('click', () => {
+                Utils.$('[data-action="appointment"]', container)?.addEventListener('click', () => {
                     store.navigate('appointment');
                 });
                 
-                Utils.$('[data-action="expertises"]', container).addEventListener('click', () => {
+                Utils.$('[data-action="expertises"]', container)?.addEventListener('click', () => {
                     store.navigate('expertises');
                 });
                 
-                Utils.$('[data-action="contact"]', container).addEventListener('click', () => {
+                Utils.$('[data-action="contact"]', container)?.addEventListener('click', () => {
                     store.navigate('contact');
                 });
             }
@@ -1419,21 +1408,18 @@
 
         // TeamPage
         class TeamPage extends Component {
-            async beforeRender() {
-                await store.loadLawyers();
-            }
-
             render() {
                 const { lawyers } = store.getState();
+                const isMobile = Utils.isMobile();
                 
                 return `
-                    <div>
+                    <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
                                 <h1 class="text-center mb-8 reveal">Notre équipe</h1>
                                 <div class="grid grid-3">
                                     ${lawyers.map((lawyer, index) => `
-                                        <div class="card team-card ${!Utils.isMobile() ? 'card-3d' : ''} reveal"
+                                        <div class="card team-card ${!isMobile ? 'card-3d' : ''} reveal"
                                              style="animation-delay: ${index * 0.15}s;">
                                             <div class="team-photo">👤</div>
                                             <h3>${lawyer.name}</h3>
@@ -1460,15 +1446,12 @@
 
         // AppointmentPage
         class AppointmentPage extends Component {
-            async beforeRender() {
-                await store.loadLawyers();
-            }
-
             render() {
                 const { lawyers, appointment } = store.getState();
+                const isMobile = Utils.isMobile();
                 
                 return `
-                    <div>
+                    <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
                                 <h1 class="text-center mb-8 reveal">Prendre rendez-vous</h1>
@@ -1477,7 +1460,7 @@
                                     <h2 class="text-center mb-4 reveal">Choisissez votre avocat</h2>
                                     <div class="grid grid-3">
                                         ${lawyers.map((lawyer, index) => `
-                                            <div class="card ${!Utils.isMobile() ? 'card-3d' : ''} reveal" 
+                                            <div class="card ${!isMobile ? 'card-3d' : ''} reveal" 
                                                  style="animation-delay: ${index * 0.1}s; padding: 1.5rem; cursor: pointer;" 
                                                  data-lawyer="${lawyer.id}">
                                                 <div style="text-align: center; font-size: 3rem;">👤</div>
@@ -1653,7 +1636,7 @@
         class ContactPage extends Component {
             render() {
                 return `
-                    <div>
+                    <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
                                 <h1 class="text-center mb-8 reveal">Contactez-nous</h1>
@@ -1709,26 +1692,28 @@
 
             attachEvents(container) {
                 const form = Utils.$('#contactForm', container);
-                form.addEventListener('submit', async e => {
-                    e.preventDefault();
-                    const data = new FormData(form);
-                    
-                    if (!Utils.validateEmail(data.get('email'))) {
-                        Utils.showToast('Email invalide', 'error');
-                        return;
-                    }
-                    
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    submitBtn.disabled = true;
-                    submitBtn.innerHTML = '<span class="loading"></span> Envoi...';
-                    
-                    await Utils.delay(1500);
-                    
-                    Utils.showToast('Message envoyé avec succès ! Nous vous répondrons sous 24h.');
-                    form.reset();
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Envoyer le message';
-                });
+                if (form) {
+                    form.addEventListener('submit', async e => {
+                        e.preventDefault();
+                        const data = new FormData(form);
+                        
+                        if (!Utils.validateEmail(data.get('email'))) {
+                            Utils.showToast('Email invalide', 'error');
+                            return;
+                        }
+                        
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span class="loading"></span> Envoi...';
+                        
+                        await Utils.delay(1500);
+                        
+                        Utils.showToast('Message envoyé avec succès ! Nous vous répondrons sous 24h.');
+                        form.reset();
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Envoyer le message';
+                    });
+                }
             }
 
             animate() {
@@ -1742,14 +1727,14 @@
                 const isMobile = Utils.isMobile();
                 
                 return `
-                    <div>
+                    <div class="fade-in">
                         <section class="py-16">
                             <div class="container">
                                 <h1 class="text-center mb-8 reveal">Nos expertises</h1>
                                 <p class="text-center mb-8 reveal" style="font-size: 1.125rem; color: var(--gray-3);">
                                     Une expertise pointue dans les domaines clés du droit des affaires
                                 </p>
-                                <div class="grid grid-2">
+                                <div class="${isMobile ? '' : 'grid grid-2'}">
                                     ${Object.entries(STRINGS.expertises).map(([key, exp], index) => {
                                         if (isMobile) {
                                             return `
@@ -1769,9 +1754,7 @@
                                                     </div>
                                                     <div class="expertise-content">
                                                         <p style="margin-bottom: 1rem;">${exp.desc}</p>
-                                                        <p style="color: var(--gray-3);">
-                                                            ${this.getDetailedDesc(key)}
-                                                        </p>
+                                                        <p style="color: var(--gray-3);">${exp.detail}</p>
                                                     </div>
                                                 </div>
                                             `;
@@ -1791,9 +1774,7 @@
                                                         <div>
                                                             <h2 class="mb-4">${exp.title}</h2>
                                                             <p style="line-height: 1.8;">${exp.desc}</p>
-                                                            <p style="margin-top: 1rem; color: var(--gray-3);">
-                                                                ${this.getDetailedDesc(key)}
-                                                            </p>
+                                                            <p style="margin-top: 1rem; color: var(--gray-3);">${exp.detail}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1805,16 +1786,6 @@
                         </section>
                     </div>
                 `;
-            }
-
-            getDetailedDesc(key) {
-                const descriptions = {
-                    business: 'Nous vous accompagnons dans toutes les étapes de la vie de votre entreprise : création, restructuration, cession, contentieux.',
-                    public: 'Notre expertise couvre tous les aspects du droit administratif et des marchés publics, avec une approche pragmatique.',
-                    tax: 'Conseil en optimisation fiscale et assistance lors de contrôles fiscaux, nous sécurisons vos opérations.',
-                    sports: 'Rédaction et négociation de contrats sportifs, transferts et droits à l\'image pour clubs et athlètes.'
-                };
-                return descriptions[key] || '';
             }
 
             attachEvents(container) {
@@ -1897,9 +1868,6 @@
                     Utils.$('#pageLoader').classList.add('hide');
                 }, 800);
 
-                // Load initial data
-                store.loadLawyers();
-
                 // Subscribe to state changes
                 store.subscribe(() => this.render());
                 this.render();
@@ -1915,16 +1883,11 @@
                     Utils.parallax();
                 }, 10));
 
-                // Handle resize
-                window.addEventListener('resize', Utils.debounce(() => {
-                    this.render();
-                }, 300));
-
                 // Initial reveal
                 Utils.revealOnScroll();
             }
 
-            async render() {
+            render() {
                 const { page } = store.getState();
                 
                 this.root.innerHTML = `
@@ -1933,11 +1896,11 @@
                     <div id="footer"></div>
                 `;
                 
-                await this.components.header.mount(Utils.$('#header'));
-                await this.components.footer.mount(Utils.$('#footer'));
+                this.components.header.mount(Utils.$('#header'));
+                this.components.footer.mount(Utils.$('#footer'));
                 
                 const currentPage = this.components.pages[page] || this.components.pages.home;
-                await currentPage.mount(Utils.$('#main'));
+                currentPage.mount(Utils.$('#main'));
                 
                 if (window.history.state?.page !== page) {
                     window.history.pushState({ page }, '', `#${page}`);
