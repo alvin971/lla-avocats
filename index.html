@@ -142,7 +142,7 @@
             font-weight: 700;
         }
         
-        h1 { font-size: clamp(1.875rem, 5vw, 2.5rem); }
+        h1 { font-size: clamp(1.75rem, 5vw, 2.5rem); }
         h2 { font-size: clamp(1.5rem, 4vw, 2rem); }
         h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
 
@@ -192,6 +192,7 @@
             position: relative;
             overflow: hidden;
             transform-style: preserve-3d;
+            white-space: nowrap;
         }
 
         .btn::before {
@@ -286,6 +287,13 @@
         .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
         .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
 
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
         /* Header avec glassmorphism */
         .header {
             background: rgba(255, 255, 255, 0.9);
@@ -377,7 +385,7 @@
             transform: scale(1.1);
         }
 
-        /* Menu mobile avec slide effect */
+        /* Menu mobile */
         @media (max-width: 768px) {
             .nav-menu {
                 position: fixed;
@@ -528,7 +536,38 @@
             }
         }
 
-        /* Expertises avec hover effect */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .hero-image {
+                font-size: 5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Expertises avec hover effect et accordion mobile */
         .expertise-card {
             padding: 2rem;
             text-align: center;
@@ -570,6 +609,59 @@
             transform: scale(1.2) rotate(360deg);
             background: var(--primary);
             color: var(--white);
+        }
+
+        /* Accordion pour mobile */
+        .expertise-accordion {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .expertise-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--gray-1);
+            border-radius: var(--radius);
+            transition: all var(--transition);
+        }
+
+        .expertise-accordion.active .expertise-header {
+            background: var(--primary-light);
+        }
+
+        .expertise-arrow {
+            margin-left: auto;
+            transition: transform var(--transition);
+            font-size: 1.2rem;
+        }
+
+        .expertise-accordion.active .expertise-arrow {
+            transform: rotate(180deg);
+        }
+
+        .expertise-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition);
+            padding: 0 1rem;
+        }
+
+        .expertise-accordion.active .expertise-content {
+            max-height: 500px;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .expertise-card {
+                padding: 1rem;
+            }
+            
+            .expertise-icon {
+                width: 50px;
+                height: 50px;
+            }
         }
 
         /* Form avec floating labels */
@@ -686,6 +778,16 @@
             cursor: not-allowed;
         }
 
+        @media (max-width: 768px) {
+            .calendar {
+                padding: 1rem;
+            }
+            
+            .calendar-day {
+                font-size: 0.75rem;
+            }
+        }
+
         /* Time slots avec wave effect */
         .time-slots {
             display: grid;
@@ -747,6 +849,7 @@
             transition: all var(--transition);
             transform-style: preserve-3d;
             transform: perspective(1000px);
+            padding: 1.5rem;
         }
 
         .team-card:hover {
@@ -764,6 +867,16 @@
         .team-card:hover .team-photo {
             filter: grayscale(0);
             transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .team-card:hover {
+                transform: none;
+            }
+            
+            .team-photo {
+                font-size: 3rem;
+            }
         }
 
         /* Footer avec gradient */
@@ -825,6 +938,14 @@
             max-width: 400px;
             z-index: 9999;
             animation: toastSlideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @media (max-width: 768px) {
+            .toast {
+                right: 1rem;
+                left: 1rem;
+                max-width: none;
+            }
         }
 
         @keyframes toastSlideIn {
@@ -896,24 +1017,6 @@
             transform: translateX(0);
         }
 
-        /* Typing effect */
-        .typing-text {
-            overflow: hidden;
-            border-right: 2px solid var(--primary);
-            white-space: nowrap;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--primary); }
-        }
-
         /* Utilities */
         .text-center { text-align: center; }
         .mb-4 { margin-bottom: 1rem; }
@@ -925,24 +1028,19 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            
-            .hero-buttons {
-                justify-content: center;
-            }
-            
-            .hero-image {
-                font-size: 6rem;
-            }
-            
             .py-16 { padding-top: 2rem; padding-bottom: 2rem; }
-            .container { padding: 0 0.75rem; }
+            .py-8 { padding-top: 1rem; padding-bottom: 1rem; }
+            .container { padding: 0 1rem; }
             h1 { font-size: 1.75rem; }
             h2 { font-size: 1.5rem; }
             h3 { font-size: 1.25rem; }
+            .mb-8 { margin-bottom: 1.5rem; }
+            .mb-4 { margin-bottom: 0.75rem; }
+            
+            .btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.9rem;
+            }
         }
 
         /* Performance optimization */
@@ -1021,6 +1119,8 @@
             $: (selector, parent = document) => parent.querySelector(selector),
             $$: (selector, parent = document) => parent.querySelectorAll(selector),
             
+            isMobile: () => window.innerWidth <= 768,
+            
             formatDate: date => new Date(date).toLocaleDateString('fr-FR', {
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
             }),
@@ -1070,6 +1170,7 @@
             
             // Smooth parallax
             parallax: () => {
+                if (Utils.isMobile()) return;
                 const scrolled = window.pageYOffset;
                 const parallaxElements = Utils.$$('[data-parallax]');
                 
@@ -1233,9 +1334,11 @@
         // HomePage
         class HomePage extends Component {
             render() {
+                const isMobile = Utils.isMobile();
+                
                 return `
                     <div>
-                        <section class="hero" data-parallax="0.5">
+                        <section class="hero" ${!isMobile ? 'data-parallax="0.5"' : ''}>
                             <div class="container">
                                 <div class="hero-content">
                                     <div>
@@ -1324,8 +1427,8 @@
                                 <h1 class="text-center mb-8 reveal">Notre équipe</h1>
                                 <div class="grid grid-3">
                                     ${lawyers.map((lawyer, index) => `
-                                        <div class="card team-card card-3d reveal"
-                                             style="animation-delay: ${index * 0.15}s; padding: 1.5rem;">
+                                        <div class="card team-card ${!Utils.isMobile() ? 'card-3d' : ''} reveal"
+                                             style="animation-delay: ${index * 0.15}s;">
                                             <div class="team-photo">👤</div>
                                             <h3>${lawyer.name}</h3>
                                             <p style="color: var(--accent); font-size: 0.9rem;">
@@ -1365,15 +1468,15 @@
                                     <h2 class="text-center mb-4 reveal">Choisissez votre avocat</h2>
                                     <div class="grid grid-3">
                                         ${lawyers.map((lawyer, index) => `
-                                            <div class="card card-3d reveal" 
+                                            <div class="card ${!Utils.isMobile() ? 'card-3d' : ''} reveal" 
                                                  style="animation-delay: ${index * 0.1}s; padding: 1.5rem; cursor: pointer;" 
                                                  data-lawyer="${lawyer.id}">
                                                 <div style="text-align: center; font-size: 3rem;">👤</div>
-                                                <h3>${lawyer.name}</h3>
-                                                <p style="color: var(--accent);">
+                                                <h3 style="font-size: 1.25rem;">${lawyer.name}</h3>
+                                                <p style="color: var(--accent); font-size: 0.85rem;">
                                                     ${lawyer.specialties.join(' • ')}
                                                 </p>
-                                                <p style="text-align: center; margin-top: 1rem;">
+                                                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem;">
                                                     ${Utils.formatPrice(lawyer.rate)}/heure
                                                 </p>
                                             </div>
@@ -1627,6 +1730,8 @@
         // ExpertisesPage
         class ExpertisesPage extends Component {
             render() {
+                const isMobile = Utils.isMobile();
+                
                 return `
                     <div>
                         <section class="py-16">
@@ -1636,28 +1741,56 @@
                                     Une expertise pointue dans les domaines clés du droit des affaires
                                 </p>
                                 <div class="grid grid-2">
-                                    ${Object.entries(STRINGS.expertises).map(([key, exp], index) => `
-                                        <div class="card card-3d reveal"
-                                             style="animation-delay: ${index * 0.15}s; padding: 2rem;">
-                                            <div style="display: flex; align-items: flex-start; gap: 1.5rem;">
-                                                <div class="expertise-icon" style="flex-shrink: 0;">
-                                                    ${{
-                                                        business: '💼',
-                                                        public: '🏛️',
-                                                        tax: '💰',
-                                                        sports: '⚽'
-                                                    }[key]}
+                                    ${Object.entries(STRINGS.expertises).map(([key, exp], index) => {
+                                        if (isMobile) {
+                                            return `
+                                                <div class="expertise-accordion reveal"
+                                                     style="animation-delay: ${index * 0.15}s;">
+                                                    <div class="expertise-header" data-accordion="${key}">
+                                                        <div class="expertise-icon">
+                                                            ${{
+                                                                business: '💼',
+                                                                public: '🏛️',
+                                                                tax: '💰',
+                                                                sports: '⚽'
+                                                            }[key]}
+                                                        </div>
+                                                        <h3 style="margin: 0;">${exp.title}</h3>
+                                                        <span class="expertise-arrow">▼</span>
+                                                    </div>
+                                                    <div class="expertise-content">
+                                                        <p style="margin-bottom: 1rem;">${exp.desc}</p>
+                                                        <p style="color: var(--gray-3);">
+                                                            ${this.getDetailedDesc(key)}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <h2 class="mb-4">${exp.title}</h2>
-                                                    <p style="line-height: 1.8;">${exp.desc}</p>
-                                                    <p style="margin-top: 1rem; color: var(--gray-3);">
-                                                        ${this.getDetailedDesc(key)}
-                                                    </p>
+                                            `;
+                                        } else {
+                                            return `
+                                                <div class="card card-3d reveal"
+                                                     style="animation-delay: ${index * 0.15}s; padding: 2rem;">
+                                                    <div style="display: flex; align-items: flex-start; gap: 1.5rem;">
+                                                        <div class="expertise-icon" style="flex-shrink: 0;">
+                                                            ${{
+                                                                business: '💼',
+                                                                public: '🏛️',
+                                                                tax: '💰',
+                                                                sports: '⚽'
+                                                            }[key]}
+                                                        </div>
+                                                        <div>
+                                                            <h2 class="mb-4">${exp.title}</h2>
+                                                            <p style="line-height: 1.8;">${exp.desc}</p>
+                                                            <p style="margin-top: 1rem; color: var(--gray-3);">
+                                                                ${this.getDetailedDesc(key)}
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    `).join('')}
+                                            `;
+                                        }
+                                    }).join('')}
                                 </div>
                             </div>
                         </section>
@@ -1667,12 +1800,22 @@
 
             getDetailedDesc(key) {
                 const descriptions = {
-                    business: 'Nous vous accompagnons dans toutes les étapes de la vie de votre entreprise.',
-                    public: 'Notre expertise couvre tous les aspects du droit administratif et des marchés publics.',
-                    tax: 'Conseil en optimisation fiscale et assistance lors de contrôles fiscaux.',
-                    sports: 'Rédaction et négociation de contrats sportifs, transferts et droits à l\'image.'
+                    business: 'Nous vous accompagnons dans toutes les étapes de la vie de votre entreprise : création, restructuration, cession, contentieux.',
+                    public: 'Notre expertise couvre tous les aspects du droit administratif et des marchés publics, avec une approche pragmatique.',
+                    tax: 'Conseil en optimisation fiscale et assistance lors de contrôles fiscaux, nous sécurisons vos opérations.',
+                    sports: 'Rédaction et négociation de contrats sportifs, transferts et droits à l\'image pour clubs et athlètes.'
                 };
                 return descriptions[key] || '';
+            }
+
+            attachEvents(container) {
+                // Accordion pour mobile
+                Utils.$$('[data-accordion]', container).forEach(header => {
+                    header.addEventListener('click', e => {
+                        const accordion = e.currentTarget.closest('.expertise-accordion');
+                        accordion.classList.toggle('active');
+                    });
+                });
             }
 
             animate() {
@@ -1759,6 +1902,11 @@
                     Utils.revealOnScroll();
                     Utils.parallax();
                 }, 10));
+
+                // Handle resize
+                window.addEventListener('resize', Utils.debounce(() => {
+                    this.render();
+                }, 300));
 
                 // Initial reveal
                 Utils.revealOnScroll();
